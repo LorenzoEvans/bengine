@@ -4,7 +4,7 @@
 (def moment (js/require "moment"))
 
 (defn ->date [js-date]
-  (.format (moment creation-time) "LL"))
+  (.format (moment (.getTime (js/Date.))) "LL"))
 
 ;; common wrapper for all pages
 (defn html [& forms]
