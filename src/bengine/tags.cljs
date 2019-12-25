@@ -1,10 +1,9 @@
 (ns bengine.tags
   (:require [clojure.string :as str]))
 
-(def moment (js/require "moment"))
 
-(defn ->date [js-date]
-  (.format (moment (.getTime (js/Date.))) "LL"))
+(defn ->date []
+ (.getTime (js/Date.))) 
 
 ;; common wrapper for all pages
 (defn html [& forms]
@@ -26,17 +25,17 @@
      (into
        [:ul]
        ;; Example post info:
-       (for [{:keys [here title creation-time]}
+       (for [{:keys [here title ]}
              post-infos]
          [:li
           [:a {:href here} title]
-          [:span " - (posted on: " (->date creation-time) ")"]]))]))
+          [:span " - (posted on: " (->date) ")"]]))]))
 
 ;; wrapper common to all posts
-(defn post [content {:keys [title creation-time here next prev up]}]
+(defn post [content {:keys [title here next prev up]}]
   (html
     [:h1 [:a {:href here} title]]
-    [:span "Posted on: " (->date creation-time)]
+    [:span "Posted on: " (->date)]
     content
     (when prev
       [:a {:href prev} "<--"])
